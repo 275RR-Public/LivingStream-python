@@ -1,0 +1,18 @@
+# VS Code Configs
+.vscode
+
+# Python Configs
+.venv
+__pycache__
+/lib/__pycache__
+*.pyc
+*.pyo
+
+# Generated
+*.pt
+/markers/
+/lib/calibration_config.py
+/lib/install_status.txt
+
+# Misc
+*.bak
