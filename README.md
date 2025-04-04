@@ -202,19 +202,19 @@ Launching the app after installation can be accomplished automatically with `RUN
 
 ## Aligning the D435i with Unity
 
-**IMPORTANT: After installation but before use of the system, the camera's coordinate system needs to be aligned with Unity's coordinate system.** **This should only need to be completed once after installation unless the hardware is moved or misalignment is noticed.** This will ensure that the effects shown in the projection and the people being tracked will be aligned. You will use ArUco markers (marker_0, marker_1, marker_2) and the provided `UnityConfig.exe` to calibrate the system. The `UnityConfig.exe` application projects a green circle at the origin of Unity with a 1 meter grid pattern onto the physical space. The projection represents Unity's coordinate system (the game world). The markers that you will place represent the camera's coordinate system with actual dimensions in meters.
+**IMPORTANT: After installation but before use of the system, the camera's coordinate system needs to be aligned with Unity's coordinate system.** **This should only need to be completed once after installation unless the hardware is moved, the projection is adjusted or scaled, or misalignment is noticed.** This will ensure that the effects shown in the projection and the people being tracked will be aligned. You will use ArUco markers (marker_0, marker_1, marker_2) and the provided `UnityConfig.exe` to calibrate the system. The `UnityConfig.exe` application projects a green circle at the origin of Unity with a grid pattern onto the physical space. The projection represents Unity's coordinate system (the game world).
 
 ### Prerequisites
 
 - **Printer**: Have access to a printer for the three ArUco markers (marker_0, marker_1, marker_2) that will be generated using the LivingStream Object Tracking application. **The markers can be generated and printed in advance if needed (see step 2).**
-- **Tape Measure**: Have access to a tape measure for marker placement (Note: 1m ~ 3.28ft ~ 39.36in).
+- **Tape Measure**: Have access to a tape measure for marker placement (Note: 1m ~ 3.28ft ~ 39.37in).
 
 ### Steps
 
 1. **Prepare**:
-   - Launch `Unity_Config.exe` to project the green circle (origin) and 1-meter grid onto the physical space.
+   - Launch `UnityConfig.exe` to project the green circle (origin) and 1-meter grid onto the physical space.
    - Launch the Object Tracking app with `RUN.bat` or manually, select **"Test Mode"**, and verify that the camera can see the entire projection.
-   - Let both apps run but switch to the Unity app if needed to display the cirles and grid projection onto the floor.
+   - Let both apps run but switch to the Unity app if needed to display the circles and grid projection onto the floor.
 
 2. **Generate ArUco Markers**:
    - In the Object Tracking app, select **"Config Mode"**.
@@ -224,28 +224,34 @@ Launching the app after installation can be accomplished automatically with `RUN
    - Print these markers (recommended size: 10-20 cm per side) for clear detection.
    - Verify the marker's integrity with the image files and note their orientation (the top-left on the image) in case the printer rotates or crops them.
 
-3. **Place the Markers**:
-   - The green circle is the origin, the red circle is right along the positive X-axis, the blue circle is up along the positive Z-axis.
+3. **Perform Calibration STEP 1**:
+   - In "Config Mode," click **"Calibrate"**.
+   - View your terminal window for instructions.
+   - You should see the message, "STEP 1. Measure the actual distance (in meters) between the centers of the green and red circles on the floor."
+   - Perform the measurement with your Tape Measure, enter it into the terminal window, and press Enter.
+   - Verify that you see the message for the next step, "STEP 2. Place all the ArUco markers then press Enter when ready..."
+
+4. **Perform Calibration STEP 2 - Place the Markers**:
+   - Note: The green circle is the origin, the red circle is right along the positive X-axis, the blue circle is up along the positive Z-axis.
+   - Note: We are placing markers from the perspective of the Unity camera (the projector) so up is farther away from us and the projector which is the blue circle.
    - Place **marker0** directly on the projected green circle with the top-left corner of the marker in the center of the circle.
-   - All markers will be placed with the same rotation of the top-left corner.
+   - All markers will be placed with the same rotation (rotation doesn't matter as long as they are the same).
    - Using your Tape Measure, place the top-left of **marker1** one meter away from the top-left of marker0 along the positive X-axis, in the direction of the red circle (note that marker1 may not overlap with the red circle).
    - Using your Tape Measure, place the top-left of **marker2** one meter away from the top-left of marker0 along the positive Z-axis, in the direction of the blue circle (note that marker2 may not overlap with the blue circle).
 
-4. **Perform Calibration**:
-   - If unsure, use "Test Mode" to verify all markers are visible to the camera.
-   - In "Config Mode," click **"Calibrate"**.
+5. **Complete Calibration STEP 2**:
    - View your terminal window for instructions.
-   - When prompted, press **Enter** to capture a frame.
-   - The application will detect the markers, compute their 3D positions using the depth camera, calculate the transformation (scale, rotation, translation) to match the Unity coordinates, and save the parameters to `calibration_config.py`.
-   - The transformation saved message or an error message will appear in the terminal window.
+   - Now that all markers have been placed, press Enter to capture the frame.
+   - The application will detect the markers, compute their 3D positions using the depth camera, calculate the transformation (scale, rotation, translation) to match the Unity coordinates, and save it to `calibration_config.py`.
+   - The transformation saved message (or an error message if failed) will appear in the terminal window.
 
-5. **Go Live and Test with Unity_Config.exe**:
+6. **Go Live and Test with UnityConfig.exe**:
    - Return to the home screen by clicking the "Back" button or by pressing 'q'.
    - Select **"Live Mode"** from the home screen.
-   - Ensure `Unity_Config.exe` is projecting onto the floor.
-   - Verify the alignment by walking in the tracked area and checking if you and box that appears to represent you are aligned (the box should follow you very closely as you move around).
+   - Ensure `UnityConfig.exe` is projecting onto the floor.
+   - Verify the alignment by walking in the tracked area and checking if you and the box that appears to represent you are aligned (the box should follow you very closely as you move around).
 
-6. **Repeat if Necessary**
+7. **Repeat if Necessary**
 
 ### Notes
 
@@ -294,8 +300,13 @@ For additional help, consult the Intel RealSense SDK documentation or PyTorch in
 
 - **Dependencies**:
   - Core libraries: `torch`, `torchvision`, `torchaudio`, `pyrealsense2`, `opencv-python`, `numpy`, `ultralytics`.
+  - `requirements.txt` is included just as a point of reference
 
 - **Unity Integration**:
   - Data is sent via loopback using UDP ( 127.0.0.1 : 5005 ). Ensure your Unity project is configured to receive an ID and x, y, z coordinates for each tracked object.
+
+- **Expansion of Features in the Future**:
+  - The object tracking in `lib/tracker.py` is already using pose estimation with skeleton tracking keypoints to track each person's feet. This makes adding additional features in the future using a person's hands or face almost trivial.
+  - The calibration process is designed to map a person into Unity first then scale the transformation for use with a projector. The advantage of this approach is that removing the few lines of step1 code at the beginning and end of the `calibrate` function allows this same calibration process to be used in use cases where a 1-to-1 mapping into Unity is the final result.
 
 ---
