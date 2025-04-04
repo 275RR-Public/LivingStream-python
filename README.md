@@ -2,7 +2,7 @@
 
 LivingStream Object Tracking is an application that utilizes the Intel RealSense D435i camera to detect and track objects in real-time using computer vision techniques powered by Ultralytics YOLO11. The tracked object data (x, y, z coordinates) is sent via UDP to Unity for visualization, making it ideal for interactive and immersive applications.
 
-This application is part of the larger LivingStream project which uses a projector to display a river with local fish. The projection is interactive and reacts to people as they walk over the projection. The project was created in coordination with the University of Texas at Arlington and the U.S. Army Corps of Engineers for education and entertainment at one of their visitor's centers.
+This application is part of the larger [**LivingStream project**](https://github.com/275RR-Public/LivingStream) which uses a projector to display a river with local fish. The projection is interactive and reacts to people as they walk over the projection. The project was created in coordination with the University of Texas at Arlington and the U.S. Army Corps of Engineers for education and entertainment at one of their visitor's centers.
 
 UTA Computer Science and Engineering \
 LivingStream Senior Design Team
