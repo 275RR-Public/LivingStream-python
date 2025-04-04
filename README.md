@@ -303,7 +303,7 @@ For additional help, consult the Intel RealSense SDK documentation or PyTorch in
   - `requirements.txt` is included just as a point of reference
 
 - **Unity Integration**:
-  - Data is sent via loopback using UDP ( 127.0.0.1 : 5005 ). Ensure your Unity project is configured to receive an ID and x, y, z coordinates for each tracked object.
+  - Data is sent via loopback using UDP ( 127.0.0.1 : 5005 ). Ensure your Unity project is listening on this port to receive an ID and x, y, z coordinates for each tracked object.
 
 - **Expansion of Features in the Future**:
   - The object tracking in `lib/tracker.py` is already using pose estimation with skeleton tracking keypoints to track each person's feet. This makes adding additional features in the future using a person's hands or face almost trivial.
