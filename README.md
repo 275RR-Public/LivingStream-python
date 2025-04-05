@@ -202,7 +202,7 @@ Launching the app after installation can be accomplished automatically with `RUN
 
 ## Aligning the D435i with Unity
 
-**IMPORTANT: After installation but before use of the system, the camera's coordinate system needs to be aligned with Unity's coordinate system.** **This should only need to be completed once after installation unless the hardware is moved, the projection is adjusted or scaled, or misalignment is noticed.** This will ensure that the effects shown in the projection and the people being tracked will be aligned. You will use ArUco markers (marker_0, marker_1, marker_2) and the provided `UnityConfig.exe` to calibrate the system. The `UnityConfig.exe` application projects a green circle at the origin of Unity with a grid pattern onto the physical space. The projection represents Unity's coordinate system (the game world).
+**IMPORTANT: After installation but before use of the system, the camera's coordinate system needs to be aligned with Unity's coordinate system.** **This should only need to be completed once after installation unless the hardware is moved, the projection is adjusted or scaled, or misalignment is noticed.** This will ensure that the effects shown in the projection and the people being tracked will be aligned. You will use ArUco markers (marker_0, marker_1, marker_2) and the provided `LivingStream Config.exe` to calibrate the system. The `LivingStream Config.exe` application projects a green circle at the origin of Unity with a grid pattern onto the physical space. The projection represents Unity's coordinate system (the game world).
 
 ### Prerequisites
 
@@ -212,7 +212,9 @@ Launching the app after installation can be accomplished automatically with `RUN
 ### Steps
 
 1. **Prepare**:
-   - Launch `UnityConfig.exe` to project the green circle (origin) and 1-meter grid onto the physical space.
+   - Note: The first time you launch LivingStream Config, allow the network connection in the Windows Firewall notification.
+   - Launch `LivingStream Config.exe` to project the green circle (origin) and 1-meter grid onto the physical space.
+   - Click "Lower Tide" in `LivingStream Config.exe` to disable the demo and make the following calibration steps easier.
    - Launch the Object Tracking app with `RUN.bat` or manually, select **"Test Mode"**, and verify that the camera can see the entire projection.
    - Let both apps run but switch to the Unity app if needed to display the circles and grid projection onto the floor.
 
@@ -245,10 +247,10 @@ Launching the app after installation can be accomplished automatically with `RUN
    - The application will detect the markers, compute their 3D positions using the depth camera, calculate the transformation (scale, rotation, translation) to match the Unity coordinates, and save it to `calibration_config.py`.
    - The transformation saved message (or an error message if failed) will appear in the terminal window.
 
-6. **Go Live and Test with UnityConfig.exe**:
+6. **Go Live and Test with LivingStream Config.exe**:
    - Return to the home screen by clicking the "Back" button or by pressing 'q'.
    - Select **"Live Mode"** from the home screen.
-   - Ensure `UnityConfig.exe` is projecting onto the floor.
+   - Ensure `LivingStream Config.exe` is projecting onto the floor.
    - Verify the alignment by walking in the tracked area and checking if you and the box that appears to represent you are aligned (the box should follow you very closely as you move around).
 
 7. **Repeat if Necessary**
