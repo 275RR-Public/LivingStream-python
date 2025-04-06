@@ -192,6 +192,7 @@ def calibrate(dictionary_type, marker_to_unity, output_file="calibration_config.
         #projection_scale = real_world_distance / unity_distance
         
         # step 2 - map into Unity
+        print("View the README.md for precise instructions.")
         print("Place all the ArUco markers then press Enter when ready...")
         input()  # Wait for user confirmation
         
