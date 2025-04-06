@@ -26,7 +26,7 @@ William Forbes​
   - NVIDIA GPU (1000 series or better, excluding the newest 5000 series) for approximately an 8x performance increase
   - AMD GPUs are NOT currently supported
 
-**WARNING**: Running the application on a CPU instead of a NVIDIA GPU will noticeably degrade the experience.
+**WARNING**: Running the application on a CPU instead of a NVIDIA GPU will noticeably degrade the experience. When selecting "Live Mode" in the LivingStream Object Tracking app, the app will display "cpu" or "cuda" (Nvidia GPU) to notify you of the resource being used.
 
 ---
 
@@ -300,8 +300,13 @@ Note: Both apps need to be running for the intended experience.
   - Manually install libraries individually to isolate issues.
 
 - **Performance Issues**:
-  - Use an NVIDIA GPU for optimal performance.
+  - Use a NVIDIA GPU for optimal performance.
   - Adjust lighting and reduce reflective surfaces as per the environment setup tips.
+
+- **Selected GPU during install but "Live Mode" showing CPU usage**:
+  - Install the latest Nvidia drivers
+  - Delete the .venv folder and install_status.txt file and perform installation again
+  - See PyTorch installation documentation
 
 - **Marker Calibration Issues**:
   - Verify the Markers are large enough (10-15cm per side) and are not distorted or altered.
@@ -326,6 +331,9 @@ For additional help, consult the Intel RealSense SDK documentation or Projector 
 
 - **Unity Integration**:
   - Data is sent via loopback using UDP ( 127.0.0.1 : 5005 ). Ensure your Unity project is listening on this port to receive an ID and x, y, z coordinates for each tracked object.
+
+- **Class Variables**:
+  - A number of important variables are used as class variables for easy alteration such as `max_tracks` for the maximum of number of people to track at one time or `roi_max_depth` for the maximum distance allowed for depth measurements.
 
 - **Expansion of Features in the Future**:
   - The object tracking in `lib/tracker.py` is already using pose estimation with skeleton tracking keypoints to track each person's feet. This makes adding additional features in the future using a person's hands or face almost trivial.
