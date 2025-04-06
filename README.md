@@ -71,6 +71,8 @@ Hardware placement:
 
 **Note**: Many projectors can shift the projection from their center line in both the horizontal and vertical. This might aide in placement of both the projector and D435i. The calibration steps after installation will adjust for the placement of both the projector and D435i.
 
+**Note**: To keep resource usage reasonable, the number of objects that can be tracked simultaneously has been limited to 3 people.
+
 ---
 
 ## Automated Installation of LivingStream Object Tracking Using `RUN.bat`
