@@ -1,5 +1,4 @@
 import cv2
-
 from lib.tracker import Tracker
 from lib.ui import UI
 from lib.network import Network
@@ -29,9 +28,10 @@ while True:
         # Handle calibration request
         if ui.calibrate_requested:
             tracker.stop()  # Stop the RealSense pipeline
-            marker_to_unity = {0: [0.0, 0.0, 0.0], 1: [1.0, 0.0, 0.0], 2: [0.0, 0.0, 1.0]}
+            marker_to_unity = {0: [0.0, 0.0, 0.0], 1: [2.5, 0.0, 0.0], 2: [0.0, 0.0, 2.5]}
             calibrate(cv2.aruco.DICT_6X6_250, marker_to_unity)
-            tracker.start_pipeline()  # Restart the pipeline
+            tracker.load_calibration()  # Reload the calibration params
+            tracker.start_pipeline()    # Restart the pipeline
             ui.calibrate_requested = False
             print("Calibration ended.")
 

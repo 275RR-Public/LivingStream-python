@@ -184,15 +184,15 @@ def calibrate(dictionary_type, marker_to_unity, output_file="calibration_config.
     try:
         # step 1 - Prompt user to measure the real-world distance between green and red circles
         # This step is needed to scale the Unity world to the projector's scale on the floor
-        print("STEP 1. Measure the actual distance (in meters) between the centers of the green and red circles on the floor.")
-        real_world_distance = float(input("Enter the distance in meters (e.g., 0.743) then press Enter: "))
+        #print("STEP 1. Measure the actual distance (in meters) between the centers of the green and red circles on the floor.")
+        #real_world_distance = float(input("Enter the distance in meters (e.g., 0.743) then press Enter: "))
         
         # Define the Unity distance between green and red circles (assumed to be 1 meter)
-        unity_distance = 1.0  # Assuming green is at (0,0,0) and red is at (1,0,0) in Unity
-        projection_scale = real_world_distance / unity_distance
+        #unity_distance = 1.0  # Assuming green is at (0,0,0) and red is at (1,0,0) in Unity
+        #projection_scale = real_world_distance / unity_distance
         
         # step 2 - map into Unity
-        print("STEP 2. Place all the ArUco markers then press Enter when ready...")
+        print("Place all the ArUco markers then press Enter when ready...")
         input()  # Wait for user confirmation
         
         # Capture and align frames
@@ -233,10 +233,10 @@ def calibrate(dictionary_type, marker_to_unity, output_file="calibration_config.
         
         # Part of step 1
         # Adjust the scale factor by dividing by the projection scale
-        adjusted_scale = s / projection_scale
+        #adjusted_scale = s / projection_scale
         
         # Save the adjusted transformation parameters
-        save_transformation(adjusted_scale, R, t, output_file)
+        save_transformation(s, R, t, output_file)
     
     finally:
         # Ensure the pipeline is stopped even if an error occurs

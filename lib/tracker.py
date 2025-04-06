@@ -1,3 +1,4 @@
+import importlib
 import numpy as np
 import pyrealsense2 as rs                       # python wrapper of d435i SDK
 from ultralytics import YOLO                    # AI for object detect, track, and pose
@@ -40,12 +41,18 @@ class Tracker:
         depth_sensor = self.profile.get_device().first_depth_sensor()
         self.depth_scale = depth_sensor.get_depth_scale()  # Typically 0.001 for D435i
 
+        # Load calibration parameters initially
+        self.load_calibration()
+
         # Load transformation parameters from calibration_config.py
         try:
-            from .calibration_config import SCALE, ROTATION_MATRIX, TRANSLATION_VECTOR
-            self.scale = SCALE                              # Scalar for scaling
-            self.rotation_matrix = ROTATION_MATRIX          # 3x3 rotation matrix
-            self.translation_vector = TRANSLATION_VECTOR    # 3D translation vector
+            # Import the module relative to the 'lib' package
+            calibration_config = importlib.import_module('.calibration_config', package='lib')
+            # Reload to ensure the latest file contents are used
+            importlib.reload(calibration_config)
+            self.scale = calibration_config.SCALE
+            self.rotation_matrix = calibration_config.ROTATION_MATRIX
+            self.translation_vector = calibration_config.TRANSLATION_VECTOR
             print("Loaded transformation: calibration_config.py")
         except ImportError:
             print("calibration_config.py not found. Please run the calibration process.")
