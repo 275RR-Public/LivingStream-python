@@ -44,7 +44,10 @@ class Tracker:
         # Load calibration parameters initially
         self.load_calibration()
 
-        # Load transformation parameters from calibration_config.py
+    def load_calibration(self):
+        """
+        Load or reload transformation parameters from calibration_config.py.
+        """
         try:
             # Import the module relative to the 'lib' package
             calibration_config = importlib.import_module('.calibration_config', package='lib')
@@ -55,8 +58,7 @@ class Tracker:
             self.translation_vector = calibration_config.TRANSLATION_VECTOR
             print("Loaded transformation: calibration_config.py")
         except ImportError:
-            print("calibration_config.py not found. Please run the calibration process.")
-            # Default to identity transformation if calibration is missing
+            print("calibration_config.py not found. Using default transformation.")
             self.scale = 1.0
             self.rotation_matrix = np.eye(3)
             self.translation_vector = np.zeros(3)
