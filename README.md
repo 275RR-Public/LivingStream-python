@@ -1,8 +1,12 @@
 # LivingStream Object Tracking for Unity
 
-LivingStream Object Tracking is an application that utilizes the Intel RealSense D435i camera to detect and track objects in real-time using computer vision techniques powered by Ultralytics YOLO11. The tracked object data (x, y, z coordinates) is sent via UDP to Unity for visualization, making it ideal for interactive and immersive applications.
+LivingStream Object Tracking is an application that utilizes the Intel RealSense D435i camera to detect and track objects in real-time using computer vision techniques powered by Ultralytics YOLO11 AI. The tracked object data ID and (x, y, z coordinates) is sent via UDP to Unity for visualization, making it ideal for interactive and immersive applications.
 
-This application is part of the larger [**LivingStream project**](https://github.com/275RR-Public/LivingStream) which uses a projector to display a river with local fish. The projection is interactive and reacts to people as they walk over the projection. The project was created in coordination with the University of Texas at Arlington and the U.S. Army Corps of Engineers for education and entertainment at one of their visitor's centers.
+This application is part of the larger **LivingStream project** which uses a projector to display a river with local fish. Combining the two applications, creates a projection which is interactive and reacts to people as they walk on it. The project was created in coordination with the University of Texas at Arlington and the U.S. Army Corps of Engineers for education and entertainment at one of their visitor's centers.
+
+Source Code: \
+**LivingStream-python** ([link](https://github.com/275RR-Public/LivingStream-python)) <-- you're here\
+**LivingStream-unity** ([link](https://github.com/275RR-Public/LivingStream-unity))
 
 UTA Computer Science and Engineering \
 LivingStream Senior Design Team
@@ -18,9 +22,10 @@ William Forbes​
 
 - **Required**:
   - Intel RealSense D435i camera ([link](https://www.intelrealsense.com/depth-camera-d435i/))
-  - Windows 10 or 11 machine with internet access
+  - Windows 10 or 11 machine (likely 64-bit)
   - USB 3.1 Gen 1 or better cable and port (Double-check if you notice camera delays, stutters, or blackouts)
   - Short-throw, low-latency, 1080p Projector (example: [BENQ TH671ST](https://www.benq.com/en-us/projector/cinema/th671st.html))
+  - Internet access
 
 - **Optional but Highly Recommended**:
   - NVIDIA GPU (1000 series or better, excluding the newest 5000 series) for approximately an 8x performance increase
@@ -36,7 +41,7 @@ William Forbes​
   - Python 3.11.9 ([download](https://www.python.org/downloads/release/python-3119/)) - go to bottom of page "Windows installer (64-bit)"
   - Intel RealSense SDK 2.56.3 beta ([download](https://github.com/IntelRealSense/librealsense/releases/tag/v2.56.3)) - go to Assets at bottom of page "Intel.RealSense.SDK-WIN10-2.56.3.7838.beta.exe"
   - Latest Nvidia drivers for your GPU ([download](https://www.nvidia.com/en-us/drivers/))
-  - LivingStream source code ([download](https://github.com/275RR-Public/LivingStream))
+  - LivingStream-unity source code ([download](https://github.com/275RR-Public/LivingStream-unity))
   - LivingStream-python source code ([download](https://github.com/275RR-Public/LivingStream-python))
 
 - **Optional**:
@@ -86,7 +91,7 @@ The easiest way to install and run the application is by using the provided `RUN
    - Install Python 3.11.9 and check "Add Python to PATH" during installation ([download](https://www.python.org/downloads/release/python-3119/)).
    - Install the Intel RealSense SDK ([download](https://github.com/IntelRealSense/librealsense/releases/tag/v2.56.3)).
    - Verify that your Intel RealSense D435i camera is connected via a USB 3.1 Gen 1 or better port.
-   - Note: You can verify the camera is working by using the RealSense Viewer. After launching, click "Stereo Module" and "RGB Camera" to ON. You must close this app before proceeding any further.
+   - Note: You can verify the camera is working by using the RealSense Viewer that is provided in the RealSense SDK. After launching, click "Stereo Module" and "RGB Camera" to ON. You must close this app before proceeding any further.
 
 2. **Launch `RUN.bat`**:
    - Navigate to the LivingStream-python directory in File Explorer.
@@ -186,7 +191,7 @@ Launching the app after installation can be accomplished automatically with `RUN
 
 ### Using `RUN.bat`
 
-- Double-click **`RUN.bat`**:
+- **Double-click `RUN.bat`**:
 
   - RUN.bat will check for a current install
   - RUN.bat activates the virtual environment and runs the app
@@ -213,57 +218,59 @@ Launching the app after installation can be accomplished automatically with `RUN
      python app.py
      ```
 
+**Note**: "Click and Drag" a file while holding "Alt" to create shortcuts on Windows. Before releasing, Windows should indicate that a shortcut is being created. Creating shortcuts for `RUN.bat` and `LivingStream.exe` on your Desktop could simplify future use.
+
 ---
 
 ## Aligning the D435i with Unity
 
-**IMPORTANT: After installation but before use of the system, the camera's coordinate system needs to be aligned with Unity's coordinate system.** **This should only need to be completed once after installation unless the hardware is moved, the projection is adjusted or scaled, or misalignment is noticed.** This will ensure that the effects shown in the projection and the people being tracked will be aligned. You will use ArUco markers (marker_0, marker_1, marker_2) and the provided `LivingStream Config.exe` to calibrate the system. The `LivingStream Config.exe` application projects a green circle at the origin of Unity onto the physical space. The projection represents Unity's coordinate system (the game world).
+**IMPORTANT: After installation but before use of the system, the camera's coordinate system needs to be aligned with Unity's coordinate system.** **This should only need to be completed once after installation unless the hardware is moved, the projection is adjusted or scaled, or misalignment is noticed.** This will ensure that the effects shown in the projection and the people being tracked will be aligned. You will use ArUco markers (marker_0, marker_1, marker_2) and the provided `LivingStream.exe` to calibrate the system. The `LivingStream.exe` application in the "Calibrate" screen projects a green circle at the origin of Unity onto the physical space. The projection represents Unity's coordinate system (the game world).
 
 ### Prerequisites
 
 - **Printer**: Have access to a printer for the three ArUco markers (marker_0, marker_1, marker_2) that will be generated using the LivingStream Object Tracking application. **The markers can be generated and printed in advance if needed (see step 2).**
-- **LivingStream Config** is located in **LivingStream\Assets\depthSensorDir\build\\\<type>\\** where type is your system **32bit or 64bit** (most likely 64bit for newer computer systems)
+- **LivingStream.exe** is located in **LivingStream-unity\Build\\\<type>\\** where type is your system **32bit or 64bit** (most likely 64bit for newer computer systems)
 
 ### Steps
 
 1. **Prepare**:
-   - Note: The first time you launch LivingStream Config, allow the network connection in the Windows Firewall notification.
-   - Note: Windows might display "Defender prevented an unrecognized app", click "More Info", click "Run Anyway"
-   - Note: You will have your computer's display and the projector as a display. There are multiple ways to configure these displays for your use. However, LivingStream Config will launch on your Primary display. It might be easiest for the following steps if you set both displays to be active with the projector as your primary display in the Nvidia control panel under "Set up multiple displays". Also note, in this configuration, when interacting with apps on your computer's display, LivingStream Config will lose focus and pause. You can make LivingStream Config active again by clicking anywhere on it.
-   - Launch `LivingStream Config.exe` to project the green (origin), red, and blue circles onto the physical space.
-   - Click "Calibrate" in `LivingStream Config.exe` to disable the demo and prepare Unity for calibration.
+   - **Note**: The first time you launch LivingStream, allow the network connection in the Windows Firewall notification.
+   - **Note**: Windows might display "Defender prevented an unrecognized app", click "More Info", click "Run Anyway"
+   - **Note**: You will have your computer's display and the projector as a display. There are multiple ways to configure these displays for your use. However, LivingStream will launch on your Primary display. It might be easiest for the following steps if you set both displays to be active with the projector as your primary display in the Nvidia control panel under "Set up multiple displays". Also note, in this configuration, when interacting with apps on your computer's display, LivingStream will lose focus and pause. You can make LivingStream active again by clicking anywhere on it.
+   - Launch `LivingStream.exe`.
+   - Click **"Calibrate"** in `LivingStream.exe` to disable the demo (main menu) and prepare Unity for calibration.
    - Launch the Object Tracking app with `RUN.bat` or manually (if not already open), select **"Test Mode"**, and verify that the camera can see the entire projection.
 
 2. **Generate ArUco Markers**:
    - In the Object Tracking app, select **"Config Mode"**.
    - In "Config Mode," click **"Create Markers"** to generate ArUco markers with IDs 0, 1, and 2.
    - A success message will be displayed in your terminal window after creation.
-   - Find the generated marker images (e.g., `marker_0.png`, `marker_1.png`, `marker_2.png`) in the `markers` directory.
+   - Find the generated marker images (e.g., `marker_0.png`, `marker_1.png`, `marker_2.png`) in the `LivingStream-python\markers` directory.
    - Print these markers (recommended size: 10-15 cm per side) for clear detection.
    - Verify the printed marker's integrity with the image files and note their orientation (the top-left on the image) in case the printer rotates or crops them.
 
 3. **Perform Calibration STEP 1 - Place the Markers**:
-   - Note: The green circle is the origin, the red circle is right along the positive X-axis, the blue circle is up along the positive Z-axis.
-   - Note: We are placing markers from the perspective of the Unity camera (the projector). In other words, face the projection so you are looking at the green circle with the red circle to your right, the buttons close to you, and the blue circle farthest from you.
-   - Place **marker0** directly on the projected green circle with the **top-left corner of the marker in the center of the circle**. Make sure the black of the marker itself (not just the printer paper) is in the circle.
-   - All markers will be placed with the same rotation (rotation doesn't matter as long as they are the same).
-   - Place the top-left corner of **marker1** in the center of the red circle.
-   - Place the top-left corner of **marker2** in the center of the blue circle.
+   - **Note**: The green circle is the origin, the red circle is right along the positive X-axis, the blue circle is up along the positive Z-axis.
+   - **Note**: We are placing markers from the perspective of the Unity camera (the projector). In other words, face the projection so you are looking at the green circle with the red circle to your right, the "Back" button close to you, and the blue circle farthest from you.
+   - **Note**: All markers will be placed with the same rotation (rotation doesn't matter as long as they are the same).
+   - Place **marker0** directly on the projected **green** circle with the **top-left corner of the marker in the center of the circle**. Make sure the black of the marker itself (not just the printer paper) is in the center of the circle.
+   - Place the top-left corner of **marker1** in the center of the **red** circle.
+   - Place the top-left corner of **marker2** in the center of the **blue** circle.
 
-4. **Perform Calibration STEP 2**:
-   - In "Config Mode," click **"Calibrate"**.
+4. **Perform Calibration STEP 2 - Calibrate**:
+   - In the Object Tracking app under "Config Mode," click **"Calibrate"**.
    - View your terminal window for instructions, you should see "Place all the ArUco markers then press Enter when ready...".
    - Now that all markers have been placed, press Enter to capture the frame.
-   - The application will detect the markers, compute their 3D positions using the depth camera, calculate the transformation (scale, rotation, translation) to match the Unity coordinates, and save it to `calibration_config.py`.
+   - The application will detect the markers, compute their 3D positions using the RGB and depth cameras, calculate the transformation (scale, rotation, translation) to match the Unity coordinates, and save it to `calibration_config.py`.
    - The **transformation saved message** (or an error message if failed) will appear in the terminal window.
    - If you repeatly fail to save the transformaton, see the troubleshooting section below.
 
-5. **Go Live and Test with LivingStream Config.exe**:
-   - Return to the home screen by clicking the "Back" button or by pressing 'q'.
+5. **Go Live and Test with LivingStream.exe**:
+   - In the Object Tracking app, Return to the home screen by clicking the "Back" button or by pressing 'q'.
    - Select **"Live Mode"** from the home screen.
-   - Ensure `LivingStream Config.exe` is projecting onto the floor in Calibrate mode.
-   - Verify the alignment by walking in the tracked area and checking if you and the box that appears to represent you are aligned (the box should follow you very closely at your feet as you move around).
-   - You can also walk around in the Demo mode of LivingStream Config, but the tracking will not follow you exactly.
+   - In `LivingStream.exe`, go "Back" to Demo mode (main menu).
+   - Optional: You can also walk around in the Demo mode of LivingStream, but the tracking will not follow you exactly.
+   - Verify the alignment by walking around in the **Play** mode of LivingStream for a complete test of the system.
 
 6. **Repeat if Necessary**
 
@@ -276,10 +283,10 @@ Launching the app after installation can be accomplished automatically with `RUN
 
 ---
 
-## Normal Operation (after all setup and calibration)
+## Normal Operation (after all installation and calibration)
 
-1. Launch the LivingStream Object Tracking app and select "Live Mode"
-2. Launch LivingStream
+1. Launch the LivingStream Object Tracking app using **`RUN.bat` and select "Live Mode"**
+2. Launch **`LivingStream.exe` and select "Play"**
 
 Note: Both apps need to be running for the intended experience.
 
@@ -288,11 +295,28 @@ Note: Both apps need to be running for the intended experience.
 ## Troubleshooting
 
 - **Python Not Found or Wrong Version**:
-  - Verify Python 3.11.9 is installed and in the PATH (`python --version`).
+  - Verify Python 3.11.9 is installed and in the PATH (`python --version` in Windows Terminal).
 
 - **Camera Not Detected**:
-  - Ensure the camera is connected via USB 3.1 Gen 1 or better.
-  - Check Windows privacy settings: Search "camera privacy" and enable camera access.
+  - Close all applications.
+    - Launch the RealSense Viewer which is included in the RealSense SDK to verify if working.
+  - Check Windows privacy settings: Search "camera privacy" and enable camera access, both generally and for apps.
+    - Launch the RealSense Viewer which is included in the RealSense SDK to verify if working.
+  - Ensure the camera is connected via USB 3.1 Gen 1 or better (cable and port).
+  - Unplug the USB, wait a few seconds, and replug the USB.
+    - Launch the RealSense Viewer which is included in the RealSense SDK to verify if working.
+  - Try a different USB port.
+    - Launch the RealSense Viewer which is included in the RealSense SDK to verify if working.
+  - Restart Windows.
+    - Launch the RealSense Viewer which is included in the RealSense SDK to verify if working.
+  - Uninstall then reinstall the RealSense SDK.
+    - Launch the RealSense Viewer which is included in the RealSense SDK to verify if working.
+  - If there was a recent Window's update, consider "Rolling back" the update.
+    - Launch the RealSense Viewer which is included in the RealSense SDK to verify if working.
+
+- **RUN.bat hangs when launching**:
+  - This usually occurs when the RealSense camera is not responding
+    - See Camera Not Detected
 
 - **Installation Fails**:
   - Confirm internet connectivity.
@@ -320,10 +344,11 @@ For additional help, consult the Intel RealSense SDK documentation or Projector 
 
 ## For Developers
 
-- **Source Code**:
+- **Source Code for LivingStream-python**:
   - Main logic is in `app.py`.
   - Installation logic is in `install.py`.
   - Batch script logic is in `RUN.bat`.
+  - Object detection and tracking logic is in `tracker.py`.
 
 - **Dependencies**:
   - Core libraries: `torch`, `torchvision`, `torchaudio`, `pyrealsense2`, `opencv-python`, `numpy`, `ultralytics`.
@@ -336,7 +361,7 @@ For additional help, consult the Intel RealSense SDK documentation or Projector 
   - A number of important variables are used as class variables for easy alteration such as `max_tracks` for the maximum of number of people to track at one time or `roi_max_depth` for the maximum distance allowed for depth measurements.
 
 - **Expansion of Features in the Future**:
-  - The object tracking in `lib/tracker.py` is already using pose estimation with skeleton tracking keypoints to track each person's feet. This makes adding additional features in the future using a person's hands or face almost trivial.
+  - The object tracking in `lib/tracker.py` is already using pose estimation with skeleton tracking keypoints to track each person's feet. This makes adding additional features in the future using a person's hands or other joints almost trivial.
 
 - **Other Use Cases**:
   - The calibration process is designed to map a person into Unity. For our use, the calibration process ensures Unity objects follow real world movements. However, by physically spacing the markers 1m apart during calibration while keeping marker0 at the origin, the transformation will map a 1m movement in the real world to a 1m movement in Unity.
