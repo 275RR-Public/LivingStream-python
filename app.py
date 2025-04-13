@@ -28,7 +28,7 @@ while True:
         # Handle calibration request
         if ui.calibrate_requested:
             tracker.stop()  # Stop the RealSense pipeline
-            marker_to_unity = {0: [0.0, 0.0, 0.0], 1: [2.5, 0.0, 0.0], 2: [0.0, 0.0, 2.5]}
+            marker_to_unity = {0: [0.0, 0.0, 0.0], 1: [5.0, 0.0, 0.0], 2: [0.0, 0.0, 5.0]}
             calibrate(cv2.aruco.DICT_6X6_250, marker_to_unity)
             tracker.load_calibration()  # Reload the calibration params
             tracker.start_pipeline()    # Restart the pipeline
