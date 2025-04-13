@@ -363,6 +363,7 @@ For additional help, consult the Intel RealSense SDK documentation or Projector 
 - **Expansion of Features in the Future**:
   - The object tracking in `lib/tracker.py` is already using pose estimation with skeleton tracking keypoints to track each person's feet. This makes adding additional features in the future using a person's hands or other joints almost trivial.
   - Using OpenCV as the GUI is simple but limiting. In the future, refactor to PySide for a complete GUI implementation.
+  - Use a Windows Installer (such as Inno) to package both apps.
 
 - **Other Use Cases**:
   - The calibration process is designed to map a person into Unity. For our use, the calibration process ensures Unity objects follow real world movements. However, by physically spacing the markers 1m apart during calibration while keeping marker0 at the origin, the transformation will map a 1m movement in the real world to a 1m movement in Unity.
